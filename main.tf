@@ -1,51 +1,6 @@
-#Backend Tarraform tfstate
-/*terraform {
-  backend "s3" {
-        bucket = "terraform-state-darovero"
-        key = "global/s3/terraform.tfstate"
-        region = "us-east-1"
-        dynamodb_table = "terraform-state-locking"
-        encrypt = true
-    }
-}*/
-
 # Configure the AWS Provider
 provider "aws" {
   region = "us-east-1"
-}
-
-#Bucket S3 store terraform state
-resource "aws_s3_bucket" "terraform_state" {
-    bucket = "terraform-state-darovero"
-
-    lifecycle {
-      prevent_destroy = true
-    }
-
-    versioning {
-      enabled = true
-    }
-
-    server_side_encryption_configuration {
-      rule {
-
-        apply_server_side_encryption_by_default {
-          sse_algorithm = "AES256"
-        }
-
-        }
-    }
-}
-
-resource "aws_dynamodb_table" "terraform_locks" {
-  name = "terraform-state-locking"
-  billing_mode = "PAY_PER_REQUEST"
-  hash_key = "LockID"
-
-  attribute {
-        name = "LockID"
-        type = "S"
-    }    
 }
 
 #Retrieve the list of AZs in the current AWS region
