@@ -1,4 +1,4 @@
-terraform {
+/*terraform {
  backend "s3" {
    bucket         = "terraform-state-darovero"
    key            = "state/terraform.tfstate"
@@ -8,7 +8,7 @@ terraform {
    dynamodb_table = "terraform-state"
  }
 }
-
+*/
 
 resource "aws_kms_key" "terraform-bucket-key" {
  description             = "This key is used to encrypt bucket objects"
